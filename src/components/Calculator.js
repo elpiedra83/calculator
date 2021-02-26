@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Buttons from "./Buttons";
 import DisplayActual from "./DisplayActual";
 import DisplayFormula from "./DisplayFormula";
@@ -7,7 +7,6 @@ import DisplayFormula from "./DisplayFormula";
 const Calculator = () => {
   const [memoryNumber, setMemoryNumber] = useState("");
   const [actualNumber, setActualNumber] = useState("");
-  //   useEffect(() => {}, [actualNumber, memoryNumber]);
 
   const addToFormula = (e) => {
     setMemoryNumber(memoryNumber + actualNumber + e.target.innerText);
@@ -19,7 +18,9 @@ const Calculator = () => {
   };
 
   const formulaResult = () => {
+    console.log(`memoryNumber:${memoryNumber} actualNumber:${actualNumber}`);
     let n = memoryNumber.concat(actualNumber);
+    console.log("n:" + n);
     setMemoryNumber(n);
     setActualNumber("");
     let stringFormula = n;
@@ -32,11 +33,14 @@ const Calculator = () => {
         stringFormula = n.slice(0, -1);
       }
       [...stringFormula].map((number) => {
+        console.log("number:" + number);
         if (!isNaN(number)) {
           arrayFormula.push(Number(number));
         } else {
           operator = number;
         }
+        console.log("arrayFormula: " + arrayFormula);
+        console.log("operator: " + operator);
         switch (operator) {
           case "×":
             resultado = arrayFormula[0] * arrayFormula[1];
@@ -51,7 +55,8 @@ const Calculator = () => {
             resultado = arrayFormula[0] / arrayFormula[1];
             break;
         }
-        return 0;
+        console.log("resultado: " + resultado);
+        return resultado;
       });
       setMemoryNumber(resultado);
       setActualNumber("");
