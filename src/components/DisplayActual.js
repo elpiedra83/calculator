@@ -1,7 +1,7 @@
 import React from "react";
 
-const DisplayActual = () => {
-  return <div className="displayActual">8</div>;
+const DisplayActual = ({ actualNumber }) => {
+  return <div className="displayActual">{actualNumber}</div>;
 };
 
 export default DisplayActual;

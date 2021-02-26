@@ -1,102 +1,121 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-const Button = () => {
-  const [number, setNumber] = useState(0);
-
-  useEffect(() => {
-    // effect
-    // return () => {
-    //     cleanup
-    // }
-    console.log(number);
-  }, [number]);
-
-  const pushNumber = (e) => {
-    setNumber(number + e);
-  };
-  const resetDisplay = () => {
-    setNumber(0);
-  };
-
+const Button = ({ pushNumber, addToFormula, resetDisplay, formulaResult }) => {
   return (
     <>
-      <button className="buttons operator" id="plus">
+      <button
+        className="buttons operator"
+        id="plus"
+        onClick={(e) => addToFormula(e)}
+      >
         +
       </button>
-      <button className="buttons operator" id="minus">
+      <button
+        className="buttons operator"
+        id="minus"
+        onClick={(e) => addToFormula(e)}
+      >
         &minus;
       </button>
-      <button className="buttons operator" id="times">
+      <button
+        className="buttons operator"
+        id="times"
+        onClick={(e) => addToFormula(e)}
+      >
         &times;
       </button>
-      <button className="buttons operator" id="divided">
+      <button
+        className="buttons operator"
+        id="divided"
+        onClick={(e) => addToFormula(e)}
+      >
         &divide;
       </button>
-      <button className="buttons number" id="one" onClick={() => pushNumber(1)}>
+      <button
+        className="buttons number"
+        id="one"
+        onClick={(e) => pushNumber(e)}
+      >
         1
       </button>
-      <button className="buttons number" id="two" onClick={() => pushNumber(2)}>
+      <button
+        className="buttons number"
+        id="two"
+        onClick={(e) => pushNumber(e)}
+      >
         2
       </button>
       <button
         className="buttons number"
         id="three"
-        onClick={() => pushNumber(3)}
+        onClick={(e) => pushNumber(e)}
       >
         3
       </button>
       <button
         className="buttons number"
         id="four"
-        onClick={() => pushNumber(4)}
+        onClick={(e) => pushNumber(e)}
       >
         4
       </button>
       <button
         className="buttons number"
         id="five"
-        onClick={() => pushNumber(5)}
+        onClick={(e) => pushNumber(e)}
       >
         5
       </button>
-      <button className="buttons number" id="six" onClick={() => pushNumber(6)}>
+      <button
+        className="buttons number"
+        id="six"
+        onClick={(e) => pushNumber(e)}
+      >
         6
       </button>
       <button
         className="buttons number"
         id="seven"
-        onClick={() => pushNumber(7)}
+        onClick={(e) => pushNumber(e)}
       >
         7
       </button>
       <button
         className="buttons number"
         id="eight"
-        onClick={() => pushNumber(8)}
+        onClick={(e) => pushNumber(e)}
       >
         8
       </button>
       <button
         className="buttons number"
         id="nine"
-        onClick={() => pushNumber(9)}
+        onClick={(e) => pushNumber(e)}
       >
         9
       </button>
       <button
         className="buttons number"
         id="zero"
-        onClick={() => pushNumber(0)}
+        onClick={(e) => pushNumber(e)}
       >
         0
       </button>
-      <button className="buttons action" id="equal">
+      <button
+        className="buttons action"
+        id="equal"
+        onClick={() => formulaResult()}
+      >
         =
       </button>
       <button className="buttons action" id="ac" onClick={() => resetDisplay()}>
         AC
       </button>
-      <button className="buttons number" id="period">
+      <button
+        className="buttons number"
+        id="period"
+        onClick={(e) => pushNumber(e)}
+      >
         .
       </button>
     </>
