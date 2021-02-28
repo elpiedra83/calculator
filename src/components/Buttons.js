@@ -1,33 +1,39 @@
 import React from "react";
 
-const Button = ({ pushNumber, addToFormula, resetDisplay, formulaResult }) => {
+const Button = ({
+  pushNumber,
+  pushZero,
+  pushDecimal,
+  add,
+  substract,
+  multiply,
+  divide,
+  resetDisplay,
+  formulaResult,
+}) => {
   return (
     <>
-      <button
-        className="buttons operator"
-        id="plus"
-        onClick={(e) => addToFormula(e)}
-      >
+      <button className="buttons operator" id="plus" onClick={() => add()}>
         +
       </button>
       <button
         className="buttons operator"
         id="minus"
-        onClick={(e) => addToFormula(e)}
+        onClick={() => substract()}
       >
         &minus;
       </button>
       <button
         className="buttons operator"
         id="times"
-        onClick={(e) => addToFormula(e)}
+        onClick={() => multiply()}
       >
         &times;
       </button>
       <button
         className="buttons operator"
         id="divided"
-        onClick={(e) => addToFormula(e)}
+        onClick={() => divide()}
       >
         &divide;
       </button>
@@ -94,11 +100,7 @@ const Button = ({ pushNumber, addToFormula, resetDisplay, formulaResult }) => {
       >
         9
       </button>
-      <button
-        className="buttons number"
-        id="zero"
-        onClick={(e) => pushNumber(e)}
-      >
+      <button className="buttons number" id="zero" onClick={(e) => pushZero(e)}>
         0
       </button>
       <button
@@ -114,7 +116,7 @@ const Button = ({ pushNumber, addToFormula, resetDisplay, formulaResult }) => {
       <button
         className="buttons number"
         id="period"
-        onClick={(e) => pushNumber(e)}
+        onClick={(e) => pushDecimal(e)}
       >
         .
       </button>

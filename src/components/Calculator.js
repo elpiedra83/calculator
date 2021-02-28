@@ -7,65 +7,93 @@ import DisplayFormula from "./DisplayFormula";
 const Calculator = () => {
   const [memoryNumber, setMemoryNumber] = useState("");
   const [actualNumber, setActualNumber] = useState("");
+  const [previousNumber, setPreviousNumber] = useState("");
+  const [operator, setOperator] = useState("");
 
-  const addToFormula = (e) => {
-    setMemoryNumber(memoryNumber + actualNumber + e.target.innerText);
-    setActualNumber("");
+  const addToMemory = (actualOperator) => {
+    if (memoryNumber.indexOf("=") === -1) {
+      setPreviousNumber(actualNumber);
+      setMemoryNumber(memoryNumber + actualNumber + actualOperator);
+      setActualNumber("");
+    } else {
+      setPreviousNumber(actualNumber);
+      setMemoryNumber(actualNumber + actualOperator);
+      setActualNumber("");
+    }
   };
 
+  const pushZero = (e) => {
+    //only allows to put a zero in every position nor the start one
+    if (actualNumber !== "") {
+      setActualNumber(actualNumber + e.target.innerText);
+    }
+  };
+  const pushDecimal = (e) => {
+    //check if there is only one decimal point en the actual display
+    if (actualNumber.indexOf(".") === -1) {
+      setActualNumber(actualNumber + e.target.innerText);
+    }
+  };
   const pushNumber = (e) => {
     setActualNumber(actualNumber + e.target.innerText);
   };
 
-  const formulaResult = () => {
-    console.log(`memoryNumber:${memoryNumber} actualNumber:${actualNumber}`);
-    let n = memoryNumber.concat(actualNumber);
-    console.log("n:" + n);
-    setMemoryNumber(n);
-    setActualNumber("");
-    let stringFormula = n;
-    let arrayFormula = [];
-    let resultado = 0;
-    let operator = "";
-    if (n.length > 0) {
-      //check if last char is number or operator
-      if (isNaN(n.charAt(n.length - 1))) {
-        stringFormula = n.slice(0, -1);
-      }
-      [...stringFormula].map((number) => {
-        console.log("number:" + number);
-        if (!isNaN(number)) {
-          arrayFormula.push(Number(number));
-        } else {
-          operator = number;
-        }
-        console.log("arrayFormula: " + arrayFormula);
-        console.log("operator: " + operator);
-        switch (operator) {
-          case "×":
-            resultado = arrayFormula[0] * arrayFormula[1];
-            break;
-          case "+":
-            resultado = arrayFormula[0] + arrayFormula[1];
-            break;
-          case "−":
-            resultado = arrayFormula[0] - arrayFormula[1];
-            break;
-          case "÷":
-            resultado = arrayFormula[0] / arrayFormula[1];
-            break;
-        }
-        console.log("resultado: " + resultado);
-        return resultado;
-      });
-      setMemoryNumber(resultado);
-      setActualNumber("");
+  const add = () => {
+    if (memoryNumber.indexOf("+") === -1) {
+      addToMemory("+");
+      setOperator("plus");
     }
+  };
+  const substract = () => {
+    if (memoryNumber.indexOf("-") === -1) {
+      addToMemory("-");
+      setOperator("substract");
+    }
+  };
+  const multiply = () => {
+    if (memoryNumber.indexOf("×") === -1) {
+      addToMemory("×");
+      setActualNumber("");
+      setOperator("multiply");
+    }
+  };
+  const divide = () => {
+    if (memoryNumber.indexOf("÷") === -1) {
+      addToMemory("÷");
+      setActualNumber("");
+      setOperator("divide");
+    }
+  };
+
+  const formulaResult = () => {
+    let result = 0;
+    switch (operator) {
+      case "plus":
+        result = Number(actualNumber) + Number(previousNumber);
+        break;
+      case "substract":
+        result = Number(previousNumber) - Number(actualNumber);
+        break;
+      case "multiply":
+        result = Number.parseFloat(
+          Number(previousNumber) * Number(actualNumber)
+        ).toFixed(2);
+        break;
+      case "divide":
+        result = Number.parseFloat(
+          Number(previousNumber) / Number(actualNumber)
+        ).toFixed(2);
+        break;
+    }
+    setMemoryNumber(memoryNumber + actualNumber + "=" + result);
+    setActualNumber(result);
   };
 
   const resetDisplay = () => {
     setActualNumber("");
     setMemoryNumber("");
+    setOperator("");
+    setPreviousNumber("");
   };
 
   return (
@@ -74,7 +102,12 @@ const Calculator = () => {
       <DisplayActual actualNumber={actualNumber} />
       <Buttons
         pushNumber={pushNumber}
-        addToFormula={addToFormula}
+        pushZero={pushZero}
+        add={add}
+        substract={substract}
+        multiply={multiply}
+        divide={divide}
+        pushDecimal={pushDecimal}
         resetDisplay={resetDisplay}
         formulaResult={formulaResult}
       />
